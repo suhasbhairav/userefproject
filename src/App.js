@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+import React, {useState, useEffect, useRef} from 'react';
 import './App.css';
 
 function App() {
+
+
+  const [name, setName] = useState('');
+  const inputEleRef = useRef("");
+  const [randomNum, setRandomNum] = useState(0);
+
+
+  const resetInput = () => {
+    setName("");
+  };
+
+  const generateRandomNum = () => {
+    const num = Math.random();
+    setRandomNum(num);
+  };
+
+  useEffect(() => {
+    inputEleRef.current = randomNum;
+  }, [randomNum]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <input name="name" type="text" value={name} onChange={e => setName(e.target.value)}/>
+      <button onClick={resetInput}>Reset</button>
+      <div>
+        You entered: {name}
+      </div>
+
+      <div>
+        <div>Random: {randomNum}</div>
+        <button onClick={generateRandomNum}>Generate Random Number</button>
+      </div>
+      <div>Previous Number: {inputEleRef.current}</div>
     </div>
   );
 }
